@@ -12,7 +12,9 @@ namespace Ublaboo\Elasticsearch\DI;
 
 use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
+use Monolog\Logger;
 use Nette\DI\CompilerExtension;
+use Nette\DI\Helpers;
 
 class ElasticsearchExtension extends CompilerExtension
 {
@@ -22,6 +24,7 @@ class ElasticsearchExtension extends CompilerExtension
 	 */
 	private $defaults = [
 		'hosts' => [], // e.g.: ['127.0.0.1:9200']
+		'logDir' => '%appDir%/../log'
 	];
 
 
@@ -30,14 +33,20 @@ class ElasticsearchExtension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$config = $this->validateConfig($this->defaults, $this->config);
+		$config['logDir'] = Helpers::expand($config['logDir'], $builder->parameters);
+
+		$loggerDefinition = $builder->addDefinition($this->prefix('elasticsearch.logger'))
+			->setClass(Logger::class)
+			->setFactory(ClientBuilder::class . '::defaultLogger', [$config['logDir']]);
 
 		$builder->addDefinition($this->prefix('elasticsearch.clientFactory'))
 			->setClass(ClientBuilder::class)
-			->addSetup('setHosts', [$config['hosts']]);
+			->addSetup('setHosts', [$config['hosts']])
+			->addSetup('setLogger', [$loggerDefinition]);
 
 		$builder->addDefinition($this->prefix('elasticsearch.client'))
 			->setClass(Client::class)
-			->setFactory($this->prefix('@elasticsearch.clientFactory::build()'));
+			->setFactory($this->prefix('@elasticsearch.clientFactory::build'));
 	}
 
 }
