@@ -20,6 +20,7 @@
 		}
 	},
 	"require": {
-		"elasticsearch/elasticsearch": "^5.2"
+		"elasticsearch/elasticsearch": "^5.2",
+		"monolog/monolog": "^1.22"
 	}
 }
