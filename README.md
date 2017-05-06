@@ -6,7 +6,7 @@ Simple Nette extension for creating Elasticsearch Client service
 Download extension using composer
 
 ```
-composer require ublaboo/elasticsearch
+composer require ublaboo/elasticsearch-nette-extension
 ```
 
 Register extension in your config.neon file:
