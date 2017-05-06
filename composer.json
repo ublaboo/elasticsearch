@@ -1,0 +1,25 @@
+{
+	"name": "ublaboo/elasticsearch-nette-extension",
+	"type": "library",
+	"description": "Simple Nette extension for creating Elasticsearch Client service",
+	"keywords": ["elasticsearch", "nette", "extension"],
+	"homepage": "https://github.com/ublaboo/elasticsearch-nette-extension",
+	"license": ["MIT"],
+	"support": {
+		"issues": "https://github.com/ublaboo/elasticsearch-nette-extension/issues"
+	},
+	"authors": [
+		{
+			"name": "Pavel Janda",
+			"homepage": "http://paveljanda.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Ublaboo\\Elasticsearch\\": "src/"
+		}
+	},
+	"require": {
+		"elasticsearch/elasticsearch": "^5.2"
+	}
+}
