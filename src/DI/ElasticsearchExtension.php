@@ -37,7 +37,10 @@ class ElasticsearchExtension extends CompilerExtension
 
 		$loggerDefinition = $builder->addDefinition($this->prefix('elasticsearch.logger'))
 			->setClass(Logger::class)
-			->setFactory(ClientBuilder::class . '::defaultLogger', [$config['logDir']]);
+			->setFactory(
+				ClientBuilder::class . '::defaultLogger',
+				[$config['logDir'] . '/elasticsearch.log']
+			);
 
 		$builder->addDefinition($this->prefix('elasticsearch.clientFactory'))
 			->setClass(ClientBuilder::class)
