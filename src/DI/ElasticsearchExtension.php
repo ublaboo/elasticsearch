@@ -44,7 +44,7 @@ class ElasticsearchExtension extends CompilerExtension
 
 		$builder->addDefinition($this->prefix('elasticsearch.clientFactory'))
 			->setClass(ClientBuilder::class)
-			->addSetup('setHosts', [$config['hosts']])
+			->addSetup('setHosts', [array_filter($config['hosts'])])
 			->addSetup('setLogger', [$loggerDefinition]);
 
 		$builder->addDefinition($this->prefix('elasticsearch.client'))
